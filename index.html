@@ -1,0 +1,292 @@
+&lt;!DOCTYPE html>
+
+&lt;html lang="pt-br">
+&lt;head>
+&lt;meta charset="UTF-8">
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+&lt;title>Surpresa para Kevin!&lt;/title>
+&lt;link rel="icon" href="favicon.ico" type="image/x-icon">
+&lt;style>
+body {
+background-color: #A9D3B2; /* Verde Metálico /
+font-family: Arial, sans-serif; / Uma fonte padrão, você pode mudar /
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+margin: 0;
+color: #333; / Cor de texto padrão */
+}
+
+    .container {
+        text-align: center;
+    }
+
+    .button {
+        background-color: #FF69B4; /* Rosa dos botões */
+        color: #C0C0C0; /* Prata para o texto */
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.2em;
+        font-weight: bold;
+        transition: background-color 0.3s ease; /* Transição suave para o hover */
+        margin: 10px;
+        position: relative; /* Para o movimento dos botões */
+    }
+
+    .button:hover {
+        background-color: #E05BA2; /* Um rosa um pouco mais escuro ao passar o mouse */
+    }
+
+    .question-container {
+        text-align: center;
+        padding: 20px;
+    }
+    .answer-button {
+        position: absolute; /* Para permitir movimento via JS */
+        margin: 10px;
+    }
+    #secretAnswer1 {
+        position: static; /* Botão secreto fixo na parte inferior */
+        margin-top: 50px;
+    }
+    #secretAnswer2 {
+        position: static;
+        margin-top: 50px;
+    }
+
+    body.final-intro {
+        background-color: black; /* Fundo preto */
+        color: white;
+        flex-direction: column;
+    }
+    body.final-intro h1 {
+        font-size: 2.5em;
+        text-align: center;
+    }
+
+    .final-message {
+        text-align: center;
+        padding: 20px;
+        max-width: 800px;
+    }
+    .final-message p {
+        font-size: 1.2em;
+        line-height: 1.6;
+    }
+    .choice-buttons {
+        margin-top: 30px;
+    }
+    .choice-buttons button {
+        margin: 0 15px;
+    }
+
+    body.yes-page {
+        background-color: #A9D3B2; /* Ou outra cor que combine com a imagem */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .yes-page .celebration-image {
+        max-width: 70%;
+        height: auto;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+    .yes-page .love-text {
+        font-size: 3em;
+        color: #FFD700; /* Dourado para o brilho */
+        text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700; /* Efeito de brilho */
+        animation: glow 1.5s infinite alternate; /* Animação de brilho */
+        margin-top: 20px;
+    }
+
+    @keyframes glow {
+        from { text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700; }
+        to { text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700; }
+    }
+
+    body.no-page {
+        background-color: black;
+        color: white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .no-page .scary-image {
+        max-width: 80%;
+        height: auto;
+        margin-top: 20px;
+    }
+    .no-page h1 {
+        color: red;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+</style>
+&lt;/head>
+&lt;body>
+&lt;div id="page-container">
+&lt;div id="page-index">
+&lt;div class="container">
+&lt;h1>Olá Kevin!&lt;/h1>
+&lt;p>Clique no botão abaixo e aguarde uma surpresa que seu namorado programador fez para você.&lt;/p>
+&lt;button id="startButton" class="button">Clique aqui e aguarde uma surpresa!&lt;/button>
+&lt;/div>
+&lt;/div>
+
+    <div id="page-pergunta1" style="display: none;">
+        <div class="question-container">
+            <h2>Pergunta 1: Se você me odeia, por que seus olhos brilham quando me olham?</h2>
+            <button id="answer1_1" class="answer-button button">Ai Douglas me poupe</button>
+            <button id="answer1_2" class="answer-button button">De raiva</button>
+            <br>
+            <button id="secretAnswer1" class="button">Resposta secreta: Eu amo muito meu leão dourado!</button>
+        </div>
+    </div>
+
+    <div id="page-pergunta2" style="display: none;">
+        <div class="question-container">
+            <h2>Pergunta 2: O que você prefere: Lutar com um leão ou me dar um beijo apaixonado</h2>
+            <button id="answer2_1" class="answer-button button">Luto até com dois leões</button>
+            <button id="answer2_2" class="answer-button button">Ai Douglas, to com preguiça dessas perguntas</button>
+            <br>
+            <button id="secretAnswer2" class="button">Resposta secreta: Eu prefiro te dar o beijo apaixonado ♥</button>
+        </div>
+    </div>
+
+    <div id="page-final-intro" style="display: none;" class="final-intro">
+        <h1>AGORA A PERGUNTA FINAL! Você está pronto?</h1>
+        <button id="readyButton" class="button">Estou pronto e desejo continuar</button>
+    </div>
+
+    <div id="page-final-question" style="display: none;">
+        <div class="final-message">
+            <h1>Kevin Willians,</h1>
+            <p>Desde que você entrou na minha vida, tudo ganhou um colorido diferente, um brilho que antes eu nem sabia que existia. Cada momento ao seu lado é um presente, uma descoberta que me faz querer sempre mais. Você é a calma na minha tempestade, o sorriso que ilumina os meus dias e a paz que aquece o meu coração.</p>
+            <p>Neste Dia dos Namorados, desejo que a gente continue escrevendo essa história juntos, com cumplicidade, carinho e muito amor. E aproveitando essa data tão especial, quero te perguntar algo que vem do fundo do meu coração:</p>
+            <h2>Quer ser meu companheiro para a vida?</h2>
+
+            <div class="choice-buttons">
+                <button id="yesButton" class="button">SIM</button>
+                <button id="noButton" class="button">NÃO SEI</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-yes" style="display: none;" class="yes-page">
+        <img src="[https://img.freepik.com/vetores-premium/dois-gays-felizes-com-bandeira-lgbt-e-desfrutando-de-orgulho_156779-924.jpg?semt=ais_hybrid&w=740](https://img.freepik.com/vetores-premium/dois-gays-felizes-com-bandeira-lgbt-e-desfrutando-de-orgulho_156779-924.jpg?semt=ais_hybrid&w=740)" alt="Casal feliz" class="celebration-image">
+        <h1 class="love-text">TE AMO PRA SEMPRE &lt;3</h1>
+    </div>
+
+    <div id="page-no" style="display: none;" class="no-page">
+        <h1>VOCÊ TEM CERTEZA?</h1>
+        <img src="[https://wallpapers.com/images/high/scary-face-pictures-fxsjuft5pjizzp7u.webp](https://wallpapers.com/images/high/scary-face-pictures-fxsjuft5pjizzp7u.webp)" alt="Scary Face" class="scary-image">
+        <button id="restartButton" class="button" style="margin-top: 30px;">Começar de novo</button>
+    </div>
+</div>
+
+<audio id="background-music" loop autoplay style="display:none;">
+    <source src="audio.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+</audio>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const pageContainer = document.getElementById('page-container');
+        const pages = {
+            'index': document.getElementById('page-index'),
+            'pergunta1': document.getElementById('page-pergunta1'),
+            'pergunta2': document.getElementById('page-pergunta2'),
+            'final-intro': document.getElementById('page-final-intro'),
+            'final-question': document.getElementById('page-final-question'),
+            'yes': document.getElementById('page-yes'),
+            'no': document.getElementById('page-no')
+        };
+        let currentPage = 'index';
+        const backgroundMusic = document.getElementById('background-music');
+
+        function showPage(pageId) {
+            for (const page in pages) {
+                pages.hasOwnProperty(page) && (pagesStyle = pages["page-" + page]?.style) && (pagesStyle.display = (page === pageId) ? 'block' : 'none');
+            }
+            currentPage = pageId;
+            // Adiciona ou remove classes do body para estilos específicos de cada página
+            document.body.className = pageId.replace(/-/g, '-');
+        }
+
+        showPage(currentPage);
+        backgroundMusic.play().catch(e => console.error("Erro ao reproduzir áudio:", e));
+
+        function moveButton(buttonId) {
+            const button = document.getElementById(buttonId);
+            if (button) {
+                button.addEventListener('mouseover', () => {
+                    const maxX = window.innerWidth - button.clientWidth;
+                    const maxY = window.innerHeight - button.clientHeight;
+
+                    const newX = Math.random() * maxX;
+                    const newY = Math.random() * maxY;
+
+                    button.style.position = 'absolute'; // Garante que o botão pode se mover
+                    button.style.left = `${newX}px`;
+                    button.style.top = `${newY}px`;
+                });
+            }
+        }
+
+        // Página Inicial
+        document.getElementById('startButton').addEventListener('click', () => {
+            showPage('pergunta1');
+        });
+
+        // Pergunta 1
+        if (pages['pergunta1']) {
+            moveButton('answer1_1');
+            moveButton('answer1_2');
+            document.getElementById('secretAnswer1').addEventListener('click', () => {
+                showPage('pergunta2');
+            });
+        }
+
+        // Pergunta 2
+        if (pages['pergunta2']) {
+            moveButton('answer2_1');
+            moveButton('answer2_2');
+            document.getElementById('secretAnswer2').addEventListener('click', () => {
+                showPage('final-intro');
+            });
+        }
+
+        // Final Intro
+        if (pages['final-intro']) {
+            document.getElementById('readyButton').addEventListener('click', () => {
+                showPage('final-question');
+            });
+        }
+
+        // Pergunta Final
+        if (pages['final-question']) {
+            document.getElementById('yesButton').addEventListener('click', () => {
+                showPage('yes');
+            });
+
+            document.getElementById('noButton').addEventListener('click', () => {
+                showPage('no');
+            });
+        }
+
+        // Página "Não Sei" (Restart)
+        if (pages['no']) {
+            document.getElementById('restartButton').addEventListener('click', () => {
+                showPage('index');
+            });
+        }
+    });
+</script>
+&lt;/body>
+&lt;/html>
